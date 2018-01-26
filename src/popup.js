@@ -62,7 +62,25 @@ export class Popup {
         let errorData;
 
         try {
-          if (this.popupWindow.location.host ===  PLATFORM.global.document.location.host
+          let loginHash = localStorage.getItem('login-hash');
+          localStorage.removeItem('login-hash');
+          
+          let loginHost = localStorage.getItem('login-host');
+          localStorage.removeItem('login-host');
+
+          if (loginHost === PLATFORM.global.document.location.host) {            
+            let hash = loginHash.charAt(0) === '#' ? loginHash.substr(1) : loginHash;
+            let qs = parseQueryString(hash);
+
+            if (qs.error) {
+              reject({ error: qs.error });
+            } else {
+              resolve(qs);
+            }
+
+            this.popupWindow.close();
+            PLATFORM.global.clearInterval(_this2.polling);
+          } else if (this.popupWindow.location.host ===  PLATFORM.global.document.location.host
             && (this.popupWindow.location.search || this.popupWindow.location.hash)) {
             const qs = parseUrl(this.popupWindow.location);
 
