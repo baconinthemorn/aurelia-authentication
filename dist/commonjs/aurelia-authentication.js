@@ -1558,19 +1558,13 @@ var FetchConfig = exports.FetchConfig = (_dec16 = (0, _aureliaDependencyInjectio
     var _this17 = this;
 
     if (Array.isArray(client)) {
-      var _ret = function () {
-        var configuredClients = [];
+      var configuredClients = [];
 
-        client.forEach(function (toConfigure) {
-          configuredClients.push(_this17.configure(toConfigure));
-        });
+      client.forEach(function (toConfigure) {
+        configuredClients.push(_this17.configure(toConfigure));
+      });
 
-        return {
-          v: configuredClients
-        };
-      }();
-
-      if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === "object") return _ret.v;
+      return configuredClients;
     }
 
     if (typeof client === 'string') {
